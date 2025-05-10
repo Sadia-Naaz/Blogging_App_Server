@@ -1,0 +1,10 @@
+const express = require("express");
+const authRouter = express.Router();
+const {signUpController,loginController,logoutController} = require("../controllers/authController");
+const AuthenticateSession = require("../middlewares/isAuth");
+const verifyController = require("../controllers/verifyController");
+authRouter.post("/register",signUpController);
+authRouter.post("/login",loginController);
+authRouter.post("/logout", AuthenticateSession , logoutController);
+authRouter.get("/verify/:token",verifyController);
+module.exports = authRouter;
