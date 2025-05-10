@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 8000;
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(morgan('dev'));//to see the url in the terminal
-
+app.set('trust proxy', 1); // ✅ TRUST THE PROXY (REQUIRED for secure cookies)
 
 
 const allowedOrigins = [process.env.FRONTEND_URL];
