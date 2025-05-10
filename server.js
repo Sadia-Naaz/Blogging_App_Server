@@ -13,7 +13,7 @@ const cleanUpBin = require("./models/trashCleanUp")
 const mongodbsession = require("connect-mongodb-session")(session);
 const cors = require('cors');
 const morgan  = require("morgan");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(morgan('dev'));//to see the url in the terminal
