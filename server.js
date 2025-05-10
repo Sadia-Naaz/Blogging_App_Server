@@ -50,9 +50,9 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            secure: false,// set this to true in production, when using HTTPS
+            secure: true,// set this to true in production, when using HTTPS
             httpOnly: true,
-            sameSite:"lax",
+            sameSite:"none",
             maxAge: 90 * 24 * 60 * 60 * 1000 // cookie expiration in milliseconds
           }
     })
