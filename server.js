@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 require("./db");
-
+const isProduction = process.env.NODE_ENV === "production";
 require("dotenv").config();
 const session = require("express-session");
 const authRouter = require("./routers/authRouters");
@@ -50,9 +50,9 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            secure: true,// set this to true in production, when using HTTPS
+            secure: isProduction,// set this to true in production, when using HTTPS
             httpOnly: true,
-            sameSite:"none",
+            sameSite:isProduction?"none":"lax",
             maxAge: 90 * 24 * 60 * 60 * 1000 // cookie expiration in milliseconds
           }
     })
