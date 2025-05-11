@@ -20,7 +20,7 @@ app.use(morgan('dev'));//to see the url in the terminal
 app.set('trust proxy', 1); // ✅ TRUST THE PROXY (REQUIRED for secure cookies)
 
 console.log("backend url",process.env.FRONTEND_URL)
-const allowedOrigins = [process.env.FRONTEND_URL || "http://localhost:5173"].replace(/\/+$/, "");
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/+$/, "");
 app.use(cors({
     origin:allowedOrigins,
     credentials: true,
