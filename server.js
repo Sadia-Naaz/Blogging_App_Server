@@ -19,24 +19,18 @@ app.use(cookieParser());
 app.use(morgan('dev'));//to see the url in the terminal
 app.set('trust proxy', 1); // ✅ TRUST THE PROXY (REQUIRED for secure cookies)
 
-
-const allowedOrigins = [process.env.FRONTEND_URL];
+console.log("backend url",process.env.FRONTEND_URL)
+const allowedOrigins = [process.env.FRONTEND_URL || "http://localhost:5173"];
+app.use(cors({
+    origin:process.env.FRONTEND_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+  }));
 const store = new mongodbsession({
     uri: process.env.MONGO_URI,
     collection: "sessions",
   });
 
-  app.use(cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-  }));
   
 app.use('/uploads', express.static('uploads'));
 
@@ -50,8 +44,9 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            secure: isProduction,// set this to true in production, when using HTTPS
-            httpOnly: true,
+            // secure: isProduction,// set this to true in production, when using HTTPS
+            secure:false,
+            httpOnly: false,
             sameSite:isProduction?"none":"lax",
             maxAge: 90 * 24 * 60 * 60 * 1000 // cookie expiration in milliseconds
           }
