@@ -53,10 +53,11 @@ const raedBlogController=async(req,res)=>{
     //now to read the blog we have to apply pagination here as the user is getting post of everyone
     // first we have to query the skip value from url
     let SKIP = Number(req.query.skip)||0; 
+    const userID = req.session.user.userID;
      console.log("skip",SKIP);
         try
         {
-        const blogDB = await blogModel.readBlogModel({SKIP});
+        const blogDB = await blogModel.readBlogModel({SKIP,userID});
         console.log('blogDB',blogDB);
         if(blogDB.length === 0){
             return res.send({

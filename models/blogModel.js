@@ -38,11 +38,11 @@ const blogModel = class{
         })
     }
     //getting all the values from the db reading does't require a dynamic entry so it can be static
-   static readBlogModel({SKIP}){
+   static readBlogModel({SKIP,userID}){
    return new Promise(async(res,rej)=>{
     try{
         let blogDB = await userBlogSchema.aggregate([
-        // {$match:{isDeleted:{$ne:true}}},
+        {$match:{userID:userID ,isDeleted:{$ne:true}}},
         {$sort:{creationDateTime:-1}},
         {$skip:SKIP},
         {$limit:LIMIT},
